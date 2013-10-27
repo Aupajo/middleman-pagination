@@ -1,5 +1,7 @@
 # Middleman Pagination
 
+**Warning: not yet ready.**
+
 General-purpose pagination support for Middleman pages.
 
 ## Installation
