@@ -1,0 +1,6 @@
+language: ruby
+cache: bundler
+rvm:
+  - 1.9.3
+  - 2.0.0
+script: bundle exec rspec spec --color --format doc
