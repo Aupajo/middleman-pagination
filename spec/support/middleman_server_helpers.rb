@@ -15,7 +15,7 @@ module MiddlemanServerHelpers
       instance = Middleman::Application.server.inst do
         # Require the pagination extension after the
         # server has booted, as would typically happen.
-        require 'middleman/pagination'
+        require File.expand_path('../../../lib/middleman_extension', __FILE__)
 
         instance_exec(&block)
       end

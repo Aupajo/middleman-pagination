@@ -1,18 +1,7 @@
 ---
-pagination: true
+pagination:
+  for: recipes
+  per_page: 2
 ---
 
-<%# recipes.each do |recipe| %>
-- <%#= recipe.path %>
-<%# end %>
-
-Page <%#= recipes.page_num %> of <%#= recipes.total_page_num %>
-Showing <%#= recipes.per_page %> per page
-
-First page: <%#= recipes.first_page.url %>
-
-Next page: <%#= recipes.next_page.url %>
-
-Prev page: <%#= recipes.prev_page.try(:url) %>
-
-Last page: <%# recipes.last_page.url %>
+Pagination index.
