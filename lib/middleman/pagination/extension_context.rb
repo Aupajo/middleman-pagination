@@ -1,6 +1,10 @@
 module Middleman
   module Pagination
     class ExtensionContext
+      extend Forwardable
+      
+      def_delegators :app, :sitemap, :index_file
+
       def initialize(extension)
         @extension = extension
       end
@@ -11,10 +15,6 @@ module Middleman
 
       def app
         @extension.app
-      end
-
-      def sitemap
-        app.sitemap
       end
     end
   end
