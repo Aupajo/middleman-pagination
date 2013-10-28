@@ -80,7 +80,7 @@ Note that the `for` and `per_page` properties must be indented for the `paginati
 
 You can define as many different types of pageable resources as you like:
 
-```erb
+```ruby
 activate :recipes do
   pageable :staff do |page|
     # Match any page whose URL includes "/staff/"
