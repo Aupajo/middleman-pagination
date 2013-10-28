@@ -10,19 +10,7 @@ General-purpose pagination support for Middleman pages.
 
 ## Installation
 
-Add this line to your Middleman site's Gemfile:
-
-```ruby
-gem 'middleman-pagination', '1.0.0.pre'
-```
-
-And then execute:
-
-    $ bundle
-
-Or install it yourself as:
-
-    $ gem install middleman-pagination --pre
+Coming soon.
 
 ## Usage
 
