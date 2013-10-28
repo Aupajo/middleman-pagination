@@ -8,6 +8,14 @@ module MiddlemanServerHelpers
     @app.call
   end
 
+  def visit(path)
+    expect(get(path)).to be_ok
+  end
+
+  def find_on_page(string)
+    expect(last_response.body).to include(string)
+  end
+
   def run_site(path, &block)
     setup_environment(path)
 

@@ -56,3 +56,35 @@ describe "Simple pagination", :feature do
     expect(last_response.body).to include(string)
   end
 end
+
+describe "Pagination with directory indexes", :feature do
+  it "produces pages for a set of resources" do
+    run_site 'recipes' do
+      activate :pagination do
+        pageable :recipes do |resource|
+          resource.path.start_with?('recipes')
+        end
+      end
+
+      activate :directory_indexes
+    end
+
+    visit '/'
+    find_on_page 'First page: /'
+    find_on_page 'Prev page: none'
+    find_on_page 'Last page: /pages/4/'
+    find_on_page 'Next page: /pages/2/'
+
+    visit '/pages/2/'
+    find_on_page 'Prev page: /'
+    find_on_page 'Next page: /pages/3/'
+
+    visit '/pages/3/'
+    find_on_page 'Prev page: /pages/2/'
+    find_on_page 'Next page: /pages/4/'
+
+    visit '/pages/4/'
+    find_on_page 'Prev page: /pages/3/'
+    find_on_page 'Next page: none'
+  end
+end

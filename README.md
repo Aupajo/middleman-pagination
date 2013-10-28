@@ -35,16 +35,18 @@ Let's say you have a set of recipes that you want to create pagination for:
             bacon.html
             cake.html
 
-You can create named pageable resources based on a criteria. In this case, we're going to use any page that lives inside the `recipes` as the criteria for paging through recipes.
+You can create named pageable resources based on a criteria. In this case, we're going to use any page that lives inside the `recipes` as the criteria for paging through recipes. Inside your `config.rb`:
 
 ```ruby
-activate :recipes do
+activate :pagination do
   pageable :recipes do |page|
     # Match any page that lives in the "recipes" directory
     page.path.start_with?('recipes/')
   end
 end
 ```
+
+**Note:** If you're using the directory indexes extension, place it *after* `activate :directory_indexes`.
 
 Now, let's set up a *pagination index*. Inside `all-recipes.html`:
 
@@ -76,12 +78,13 @@ First page: <%= pagination.first_page.url %>
 Last page: <%= pagination.last_page.url %>
 ```
 
-Note that the `for` and `per_page` properties must be indented for the `pagination` frontmatter.
+**Note:** the `for` and `per_page` properties must be indented for the `pagination` frontmatter.
+
 
 You can define as many different types of pageable resources as you like:
 
 ```ruby
-activate :recipes do
+activate :pagination do
   pageable :staff do |page|
     # Match any page whose URL includes "/staff/"
     page.url.include?('/staff/')
@@ -96,8 +99,7 @@ end
 
 ## TODO
 
-1. Support directory indexes
-2. Support customising path
+* Support customising path
 
 ## Contributing
 
