@@ -13,7 +13,7 @@ General-purpose pagination support for Middleman pages.
 Add this line to your Middleman site's Gemfile:
 
 ```ruby
-gem 'middleman-pagination', '1.0.0.pre'
+gem 'middleman-pagination'
 ```
 
 And then execute:
@@ -22,7 +22,7 @@ And then execute:
 
 Or install it yourself as:
 
-    $ gem install middleman-pagination --pre
+    $ gem install middleman-pagination
 
 ## Usage
 
