@@ -88,3 +88,25 @@ describe "Pagination with directory indexes", :feature do
     find_on_page 'Next page: none'
   end
 end
+
+describe "Pagination with indexes not named index", :feature do
+  it "produces pages for a set of resources" do
+    run_site 'recipes' do
+      activate :pagination do
+        pageable :recipes do |resource|
+          resource.path.start_with?('recipes')
+        end
+      end
+    end
+
+    visit '/all-recipes.html'
+    find_on_page 'First page: /all-recipes.html'
+    find_on_page 'Prev page: none'
+    find_on_page 'Last page: /all-recipes/pages/2.html'
+    find_on_page 'Next page: /all-recipes/pages/2.html'
+
+    visit '/all-recipes/pages/2.html'
+    find_on_page 'Prev page: /all-recipes.html'
+    find_on_page 'Next page: none'
+  end
+end
