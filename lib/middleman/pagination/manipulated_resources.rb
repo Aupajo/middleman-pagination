@@ -44,8 +44,8 @@ module Middleman
 
       def build_new_index(first_index, pageable_context, page_num)
         sitemap = context.sitemap
-        # TODO use app.index_file
-        path = first_index.path.sub(/index\.html$/, "pages/#{page_num}.html")
+        pattern = %r{(^|/)#{Regexp.escape(context.index_file)}}
+        path = first_index.path.sub(pattern, "pages/#{page_num}.html")
         source_file = first_index.source_file
 
         new_index = ::Middleman::Sitemap::Resource.new(sitemap, path, source_file)
