@@ -99,7 +99,9 @@ end
 
 ## TODO
 
-* Support customising path
+* Customisable path
+* Custom sorting (e.g. by date)
+* Convenience helper methods (e.g. make `pagination.` optional)
 
 ## Contributing
 
