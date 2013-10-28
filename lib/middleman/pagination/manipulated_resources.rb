@@ -44,14 +44,7 @@ module Middleman
 
       def build_new_index(first_index, pageable_context, page_num)
         sitemap = context.sitemap
-        pattern = %r{(^|/)#{Regexp.escape(context.index_file)}$}
-
-        path = if first_index.path.match(pattern)
-                 first_index.path.sub(pattern, "pages/#{page_num}.html")
-               else
-                 first_index.path.sub(%r{(^|/)([^/]*)\.([^/]*)$}, "\\1\\2/pages/#{page_num}.\\3")
-               end
-
+        path = secondary_index_path(first_index.path, page_num)
         source_file = first_index.source_file
 
         new_index = ::Middleman::Sitemap::Resource.new(sitemap, path, source_file)
@@ -60,6 +53,18 @@ module Middleman
         pageable_context.index_resources << new_index
 
         new_index
+      end
+
+      def secondary_index_path(original_path, page_num)
+        symbolic_path_replacement = "pages/:num"
+        pattern = %r{(^|/)#{Regexp.escape(context.index_file)}$}
+        replacement = symbolic_path_replacement.sub(':num', page_num.to_s)
+
+        if original_path.match(pattern)
+          original_path.sub(pattern, "#{replacement}.html")
+        else
+          original_path.sub(%r{(^|/)([^/]*)\.([^/]*)$}, "\\1\\2/#{replacement}.\\3")
+        end
       end
 
       def add_pagination_to(resource, attributes = {})
