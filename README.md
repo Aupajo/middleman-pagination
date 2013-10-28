@@ -46,24 +46,20 @@ pagination:
 ---
 
 <% pagination.each do |recipe| %>
-- <%= recipe.data.title %>
+  - <%= link_to recipe.data.title, recipe.url %>
 <% end %>
 
 Page <%= pagination.page_num %> of <%= pagination.total_page_num %>
 
 Showing <%= pagination.per_page %> per page
 
-First page: <%= pagination.first_page.url %>
+<%= link_to "First page", pagination.first_page.url %>
 
-<% if pagination.prev_page %>
-  Prev page: <%= pagination.prev_page.url %>
-<% end %>
+<%= link_to "Prev page", pagination.prev_page.url if pagination.prev_page %>
 
-<% if pagination.next_page %>
-  Next page: <%= pagination.next_page.url %>
-<% end %>
+<%= link_to "Next page", pagination.next_page.url if pagination.next_page %>
 
-Last page: <%= pagination.last_page.url %>
+<%= link_to "Last page", pagination.first_page.url %>
 ```
 
 **Note:** the `for` and `per_page` properties must be indented for the `pagination` frontmatter.
