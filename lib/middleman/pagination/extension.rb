@@ -9,7 +9,7 @@ module Middleman
       end
 
       def manipulate_resource_list(resources)
-        mainpulated = ManipulatedResources.new(@context, resources.sort_by(&:path))
+        mainpulated = ManipulatedResources.new(@context, resources)
         mainpulated.resource_list
       end
 

@@ -27,11 +27,11 @@ module Middleman
           end
         end.compact
       end
-
+      
       def new_resources_for_index(first_index, filter)
         pageable_context = PageableContext.new(
           per_page: first_index.data.pagination.per_page || 20,
-          resources: original_resources.select(&filter),
+          resources: original_resources.select(&filter).sort_by(&:path),
           index_resources: [first_index]
         )
 
