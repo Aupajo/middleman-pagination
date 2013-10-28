@@ -96,6 +96,7 @@ end
 * Customisable path
 * Custom sorting (e.g. by date)
 * Convenience helper methods (e.g. make `pagination.` optional)
+* Pagination link generator (e.g. `Pages: 1 2 [3] ... 7 8 9`)
 
 ## Contributing
 
