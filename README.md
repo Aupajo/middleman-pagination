@@ -84,7 +84,7 @@ activate :pagination do
   end
 
   pageable :news do |page|
-    # Match any page that has "news" in its frontmatter
+    # Match any page that has a "news" property in its frontmatter
     page.data.news.present?
   end
 end
