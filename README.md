@@ -4,7 +4,7 @@
 [![Code Climate](https://codeclimate.com/github/Aupajo/middleman-pagination.png)](https://codeclimate.com/github/Aupajo/middleman-pagination)
 [![Dependency Status](https://gemnasium.com/Aupajo/middleman-pagination.png)](https://gemnasium.com/Aupajo/middleman-pagination)
 
-**Warning: this extension is brand-new, and the API liable to change.**
+**Warning: this extension is brand-new, and the API liable to change until the prerelease identifier is dropped.**
 
 General-purpose pagination support for Middleman pages.
 
