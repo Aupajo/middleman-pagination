@@ -33,7 +33,7 @@ Let's say you have a set of recipes that you want to create pagination for:
             bacon.html
             cake.html
 
-You can create named pageable resources based on a criteria. In this case, we're going to use any page that lives inside the `recipes` as the criteria for paging through recipes. Inside your `config.rb`:
+Inside your `config.rb`:
 
 ```ruby
 activate :pagination do
@@ -74,8 +74,7 @@ Showing <%= pagination.per_page %> per page
 
 **Note:** the `for` and `per_page` properties must be indented for the `pagination` frontmatter.
 
-
-You can define as many different types of pageable resources as you like:
+You can define as many different types of pageable resources as you like, with whatever criteria you like:
 
 ```ruby
 activate :pagination do
