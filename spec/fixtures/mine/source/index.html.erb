@@ -1,0 +1,21 @@
+---
+pagination:
+  for: minerals
+  per_page: 2
+---
+
+<% pagination.each do |page| %>
+- <%= page.metadata[:locals][:mineral] %> (<%= page.url %>)
+<% end %>
+
+Page <%= pagination.page_num %> of <%= pagination.total_page_num %>
+
+Showing <%= pagination.per_page %> per page
+
+First page: <%= pagination.first_page.url %>
+
+Next page: <%= pagination.next_page.try(:url) || 'none' %>
+
+Prev page: <%= pagination.prev_page.try(:url) || 'none' %>
+
+Last page: <%= pagination.last_page.url %>

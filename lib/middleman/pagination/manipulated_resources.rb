@@ -31,7 +31,7 @@ module Middleman
       def new_resources_for_index(first_index, filter)
         pageable_context = PageableContext.new(
           per_page: first_index.data.pagination.per_page || 20,
-          resources: original_resources.select(&filter).sort_by(&:path),
+          resources: original_resources.lazy.reject(&:ignored?).select(&filter).sort_by(&:path),
           index_resources: [first_index]
         )
 

@@ -110,3 +110,33 @@ describe "Pagination with indexes not named index", :feature do
     find_on_page 'Next page: none'
   end
 end
+
+describe "Pagination with proxy and ignored template", :feature do
+  it "produces pages for a set of resources" do
+    run_site 'mine' do
+      %w{ Feldspar Olivine Quartz }.each do |mineral|
+        proxy "/minerals/#{mineral.downcase}.html", '/minerals/template.html', locals: { mineral: mineral }, ignore: true
+      end
+
+      activate :pagination do
+        pageable :minerals do |resource|
+          resource.path.start_with?('mineral')
+        end
+      end
+    end
+
+    visit '/'
+    find_on_page 'Feldspar'
+    find_on_page 'Olivine'
+    find_on_page 'First page: /'
+    find_on_page 'Prev page: none'
+    find_on_page 'Last page: /pages/2.html'
+    find_on_page 'Next page: /pages/2.html'
+
+    visit '/pages/2.html'
+    find_on_page 'Quartz'
+    find_on_page 'Prev page: /'
+    find_on_page 'Next page: none'
+    expect(last_response.body).not_to include('minerals/template')
+  end
+end

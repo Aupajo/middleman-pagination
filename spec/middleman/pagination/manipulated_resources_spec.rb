@@ -29,7 +29,7 @@ module Middleman::Pagination
 
         let(:pagination_index) {
           pagination_data = double(for: 'recipes', per_page: 2)
-          resource = double(:resource, path: 'index.html', is_recipe?: false).as_null_object
+          resource = double(:resource, path: 'index.html', is_recipe?: false, ignored?: false).as_null_object
           resource.stub_chain(:data, pagination: pagination_data)
           resource
         }
@@ -37,7 +37,7 @@ module Middleman::Pagination
         let(:resource_list) {
           [pagination_index] +
           7.times.map do |n|
-            double(:resource, path: "recipe-#{n}.html", is_recipe?: true).as_null_object
+            double(:resource, path: "recipe-#{n}.html", is_recipe?: true, ignored?: false).as_null_object
           end
         }
 
