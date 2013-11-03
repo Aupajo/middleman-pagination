@@ -92,7 +92,7 @@ end
 
 ## Getting help
 
-Bug? Feature request? All feedback and suggestions welcome! You can [open an issue](https://github.com/Aupajo/middleman-pagination), [contact me on Twitter](http://twitter.com/aupajo), or [start a new topic on the Middleman forums](http://forum.middlemanapp.com).
+Bug? Feature request? You can [open an issue](https://github.com/Aupajo/middleman-pagination/issues), [contact me on Twitter](http://twitter.com/aupajo), or [start a new topic on the Middleman forums](http://forum.middlemanapp.com). All feedback and suggestions welcome.
 
 ## TODO
 
@@ -100,6 +100,7 @@ Bug? Feature request? All feedback and suggestions welcome! You can [open an iss
 * Custom sorting (e.g. by date)
 * Convenience helper methods (e.g. make `pagination.` optional)
 * Pagination link generator (e.g. `Pages: 1 2 [3] ... 7 8 9`)
+* Adopt Middleman's Queryable interface
 
 ## Contributing
 
