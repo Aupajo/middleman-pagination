@@ -4,8 +4,8 @@
 [![Code Climate](https://codeclimate.com/github/Aupajo/middleman-pagination.png)](https://codeclimate.com/github/Aupajo/middleman-pagination)
 [![Dependency Status](https://gemnasium.com/Aupajo/middleman-pagination.png)](https://gemnasium.com/Aupajo/middleman-pagination)
 
-General-purpose pagination support for Middleman pages.
-
+General-purpose pagination support for Middleman pages. Proxy pages for both pageable resources and pagination indexes are supported.
+ 
 ## Installation
 
 Add this line to your Middleman site's Gemfile:
