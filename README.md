@@ -90,6 +90,10 @@ activate :pagination do
 end
 ```
 
+## Getting help
+
+Bug? Feature request? All feedback and suggestions welcome! You can [open an issue](https://github.com/Aupajo/middleman-pagination), [contact me on Twitter](http://twitter.com/aupajo), or [start a new topic on the Middleman forums](http://forum.middlemanapp.com).
+
 ## TODO
 
 * Customisable path
