@@ -22,13 +22,14 @@ module Middleman
 
       def new_resources_for_pageable(name, filter)
         original_resources.map do |resource|
-          if resource.data.pagination.try(:for) == name.to_s
+          if !resource.ignored? && resource.data.pagination.try(:for) == name.to_s
             new_resources_for_index(resource, filter)
           end
         end.compact
       end
       
       def new_resources_for_index(first_index, filter)
+        puts "Creating new resources for index: #{first_index.path}"
         pageable_context = PageableContext.new(
           per_page: first_index.data.pagination.per_page || 20,
           # OPTIMIZE
@@ -58,11 +59,11 @@ module Middleman
 
       def secondary_index_path(original_path, page_num)
         symbolic_path_replacement = "pages/:num"
-        pattern = %r{(^|/)#{Regexp.escape(context.index_file)}$}
+        pattern = %r{^?(/)?#{Regexp.escape(context.index_file)}$}
         replacement = symbolic_path_replacement.sub(':num', page_num.to_s)
 
         if original_path.match(pattern)
-          original_path.sub(pattern, "#{replacement}.html")
+          original_path.sub(pattern, "\\1#{replacement}.html")
         else
           original_path.sub(%r{(^|/)([^/]*)\.([^/]*)$}, "\\1\\2/#{replacement}.\\3")
         end

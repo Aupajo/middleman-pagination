@@ -111,7 +111,7 @@ describe "Pagination with indexes not named index", :feature do
   end
 end
 
-describe "Pagination with proxy and ignored template", :feature do
+describe "Pagination with proxied resources and ignored proxy resource template", :feature do
   it "produces pages for a set of resources" do
     run_site 'mine' do
       %w{ Feldspar Olivine Quartz }.each do |mineral|
@@ -138,5 +138,86 @@ describe "Pagination with proxy and ignored template", :feature do
     find_on_page 'Prev page: /'
     find_on_page 'Next page: none'
     expect(last_response.body).not_to include('minerals/template')
+  end
+end
+
+describe "Pagination with proxied resources and ignored proxy index", :feature do
+  it "produces pages for a set of resources" do
+    run_site 'mine' do
+      %w{ Feldspar Olivine Quartz }.each do |mineral|
+        proxy "/minerals/#{mineral.downcase}.html", '/minerals/template.html', locals: { mineral: mineral }, ignore: true
+      end
+
+      proxy '/alternative/index.html', '/index.html', ignore: true
+
+      activate :pagination do
+        pageable :minerals do |resource|
+          resource.path.start_with?('mineral')
+        end
+      end
+    end
+
+    get '/'
+    expect(last_response.status).to eql(404)
+
+    get '/pages/2.html'
+    expect(last_response.status).to eql(404)
+
+    visit '/alternative/'
+    find_on_page 'Feldspar'
+    find_on_page 'Olivine'
+    find_on_page 'First page: /alternative/'
+    find_on_page 'Prev page: none'
+    find_on_page 'Last page: /alternative/pages/2.html'
+    find_on_page 'Next page: /alternative/pages/2.html'
+
+    visit '/alternative/pages/2.html'
+    find_on_page 'Quartz'
+    find_on_page 'Prev page: /alternative/'
+    find_on_page 'Next page: none'
+  end
+end
+
+describe "Pagination with proxied resources and two indexes (one proxied)", :feature do
+  it "produces pages for a set of resources" do
+    run_site 'mine' do
+      %w{ Feldspar Olivine Quartz }.each do |mineral|
+        proxy "/minerals/#{mineral.downcase}.html", '/minerals/template.html', locals: { mineral: mineral }, ignore: true
+      end
+
+      proxy '/alternative/index.html', '/index.html'
+
+      activate :pagination do
+        pageable :minerals do |resource|
+          resource.path.start_with?('mineral')
+        end
+      end
+    end
+
+    visit '/'
+    find_on_page 'Feldspar'
+    find_on_page 'Olivine'
+    find_on_page 'First page: /'
+    find_on_page 'Prev page: none'
+    find_on_page 'Last page: /pages/2.html'
+    find_on_page 'Next page: /pages/2.html'
+
+    visit '/pages/2.html'
+    find_on_page 'Quartz'
+    find_on_page 'Prev page: /'
+    find_on_page 'Next page: none'
+
+    visit '/alternative/'
+    find_on_page 'Feldspar'
+    find_on_page 'Olivine'
+    find_on_page 'First page: /alternative/'
+    find_on_page 'Prev page: none'
+    find_on_page 'Last page: /alternative/pages/2.html'
+    find_on_page 'Next page: /alternative/pages/2.html'
+
+    visit '/alternative/pages/2.html'
+    find_on_page 'Quartz'
+    find_on_page 'Prev page: /alternative/'
+    find_on_page 'Next page: none'
   end
 end
