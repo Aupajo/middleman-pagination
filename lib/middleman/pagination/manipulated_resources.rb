@@ -32,7 +32,7 @@ module Middleman
         pageable_context = PageableContext.new(
           per_page: first_index.data.pagination.per_page || 20,
           # OPTIMIZE
-          resources: original_resource.reject(&:ignored?).select(&filter).sort_by(&:path),
+          resources: original_resources.reject(&:ignored?).select(&filter).sort_by(&:path),
           index_resources: [first_index]
         )
 
