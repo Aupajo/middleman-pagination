@@ -29,7 +29,6 @@ module Middleman
       end
       
       def new_resources_for_index(first_index, filter)
-        puts "Creating new resources for index: #{first_index.path}"
         pageable_context = PageableContext.new(
           per_page: first_index.data.pagination.per_page || 20,
           # OPTIMIZE
