@@ -5,6 +5,7 @@ require "middleman/pagination/configuration"
 require "middleman/pagination/extension_context"
 require "middleman/pagination/manipulated_resources"
 require "middleman/pagination/pageable_context"
+require "middleman/pagination/index_path"
 require "middleman/pagination/in_page_context"
 require "middleman/pagination/extension"
 

@@ -57,15 +57,7 @@ module Middleman
       end
 
       def secondary_index_path(original_path, page_num)
-        symbolic_path_replacement = "pages/:num"
-        pattern = %r{^?(/)?#{Regexp.escape(context.index_file)}$}
-        replacement = symbolic_path_replacement.sub(':num', page_num.to_s)
-
-        if original_path.match(pattern)
-          original_path.sub(pattern, "\\1#{replacement}.html")
-        else
-          original_path.sub(%r{(^|/)([^/]*)\.([^/]*)$}, "\\1\\2/#{replacement}.\\3")
-        end
+        IndexPath.new(context, original_path, page_num).to_s
       end
 
       def add_pagination_to(resource, attributes = {})
