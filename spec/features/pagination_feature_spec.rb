@@ -47,14 +47,6 @@ describe "Simple pagination", :feature do
     find_on_page 'Prev page: /pages/3.html'
     find_on_page 'Next page: none'
   end
-
-  def visit(path)
-    expect(get(path)).to be_ok
-  end
-
-  def find_on_page(string)
-    expect(last_response.body).to include(string)
-  end
 end
 
 describe "Pagination with directory indexes", :feature do

@@ -9,7 +9,7 @@ module MiddlemanServerHelpers
   end
 
   def visit(path)
-    expect(get(path)).to be_ok
+    expect(get(path).status).to be(200)
   end
 
   def find_on_page(string)
