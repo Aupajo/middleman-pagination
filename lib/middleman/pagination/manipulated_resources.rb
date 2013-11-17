@@ -45,7 +45,7 @@ module Middleman
 
       def build_new_index(first_index, pageable_context, page_num)
         sitemap = context.sitemap
-        path = secondary_index_path(first_index.path, page_num)
+        path = IndexPath.new(context, first_index.path, page_num).to_s
         source_file = first_index.source_file
 
         new_index = ::Middleman::Sitemap::Resource.new(sitemap, path, source_file)
@@ -54,10 +54,6 @@ module Middleman
         pageable_context.index_resources << new_index
 
         new_index
-      end
-
-      def secondary_index_path(original_path, page_num)
-        IndexPath.new(context, original_path, page_num).to_s
       end
 
       def add_pagination_to(resource, attributes = {})
