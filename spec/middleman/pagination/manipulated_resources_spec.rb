@@ -28,9 +28,10 @@ module Middleman::Pagination
         }
 
         let(:pagination_index) {
-          pagination_data = double(for: 'recipes', per_page: 2, path: nil)
+          pagination_data = OpenStruct.new(for: 'recipes', per_page: 2, path: nil)
+          resource_data = OpenStruct.new(pagination: pagination_data)
           resource = double(:resource, path: 'index.html', is_recipe?: false, ignored?: false).as_null_object
-          resource.stub_chain(:data, pagination: pagination_data)
+          resource.stub(data: resource_data)
           resource
         }
 

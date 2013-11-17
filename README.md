@@ -113,6 +113,7 @@ Bug? Feature request? You can [open an issue](https://github.com/Aupajo/middlema
 ## TODO
 
 * Custom sorting (e.g. by date)
+* Add tests for metadata support
 * Convenience helper methods (e.g. make `pagination.` optional)
 * Pagination link generator (e.g. `Pages: 1 2 [3] ... 7 8 9`)
 * Adopt Middleman's Queryable interface
