@@ -27,9 +27,26 @@ module Middleman::Pagination
           expect(path.to_s).to eql('original/pages/2.html')
         end
 
-        it "allows the path format to be changed" do
+        it "supports a custom path format" do
           path = IndexPath.new(ext_context, 'original.html', 2, 'index/at/:num/list')
           expect(path.to_s).to eql('original/index/at/2/list.html')
+        end
+
+        it "preserves the original file extension" do
+          path = IndexPath.new(ext_context, 'original.htm', 2)
+          expect(path.to_s).to eql('original/pages/2.htm')
+        end
+
+        it "takes index files into account" do
+          ext_context.stub(index_file: 'index.html')
+          path = IndexPath.new(ext_context, 'original/index.html', 2)
+          expect(path.to_s).to eql('original/pages/2.html')
+        end
+
+        it "preserves the index file extension" do
+          ext_context.stub(index_file: 'index.htm')
+          path = IndexPath.new(ext_context, 'original/index.htm', 2)
+          expect(path.to_s).to eql('original/pages/2.htm')
         end
       end
       

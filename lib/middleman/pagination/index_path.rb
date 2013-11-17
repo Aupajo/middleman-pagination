@@ -19,21 +19,29 @@ module Middleman
         if page_num == 1
           original_path
         else
-          if original_path.match(index_file_pattern)
-            original_path.sub(index_file_pattern, "\\1#{replaced_path}.html")
-          else
-            original_path.sub(non_index_path_pattern, "\\1\\2/#{replaced_path}.\\3")
-          end
+          replaced_path
         end
       end
 
       private
 
+      def replaced_path
+        if original_path.match(index_file_pattern)
+          original_path.sub(index_file_pattern, "\\1#{replaced_symbolic_path}\\2")
+        else
+          original_path.sub(non_index_path_pattern, "\\1\\2/#{replaced_symbolic_path}.\\3")
+        end
+      end
+
       def index_file_pattern
+        index_file_ext = File.extname(context.index_file)
+        index_file_path = context.index_file.delete(index_file_ext)
+
         %r{
-          (/)?                                  # An optional slash
-          #{Regexp.escape(context.index_file)}  # Followed by the index file (usually "index.html")
-          $                                     # Followed by the end of the string  
+          (/)?                                # An optional slash
+          #{Regexp.escape(index_file_path)}   # Followed by the index path (usually "index")
+          (#{Regexp.escape(index_file_ext)})  # Followed by the index extension (usually ".html")
+          $                                   # Followed by the end of the string  
         }x
       end
 
@@ -47,7 +55,7 @@ module Middleman
         }x
       end
 
-      def replaced_path
+      def replaced_symbolic_path
         symbolic_path_replacement.sub(':num', page_num.to_s)
       end
 
