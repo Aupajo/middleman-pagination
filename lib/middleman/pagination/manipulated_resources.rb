@@ -29,6 +29,8 @@ module Middleman
       end
       
       def new_resources_for_index(first_index, filter)
+        symbolic_replacement_path = first_index.data.pagination.try(:path)
+
         pageable_context = PageableContext.new(
           per_page: first_index.data.pagination.per_page || 20,
           # OPTIMIZE
@@ -39,13 +41,13 @@ module Middleman
         add_pagination_to(first_index, pageable_context: pageable_context, page_num: 1)
 
         (2..pageable_context.total_page_num).map do |n|
-          build_new_index(first_index, pageable_context, n)
+          build_new_index(first_index, pageable_context, n, symbolic_replacement_path)
         end
       end
 
-      def build_new_index(first_index, pageable_context, page_num)
+      def build_new_index(first_index, pageable_context, page_num, symbolic_replacement_path)
         sitemap = context.sitemap
-        path = IndexPath.new(context, first_index.path, page_num).to_s
+        path = IndexPath.new(context, first_index.path, page_num, symbolic_replacement_path).to_s
         source_file = first_index.source_file
 
         new_index = ::Middleman::Sitemap::Resource.new(sitemap, path, source_file)

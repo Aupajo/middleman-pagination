@@ -3,10 +3,10 @@ module Middleman
     class IndexPath
       attr_accessor :context, :original_path, :page_num, :symbolic_path_replacement
 
-      def initialize(context, original_path, page_num, symbolic_path_replacement = 'pages/:num')
+      def initialize(context, original_path, page_num, symbolic_path_replacement = nil)
         @context = context
         @original_path = original_path
-        @symbolic_path_replacement = symbolic_path_replacement
+        @symbolic_path_replacement = symbolic_path_replacement || 'pages/:num'
 
         if page_num < 1
           raise "Expected page_num greater than 0 (page numbers are not zero-indexed"

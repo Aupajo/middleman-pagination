@@ -72,7 +72,7 @@ Showing <%= pagination.per_page %> per page
 <%= link_to "Last page", pagination.first_page.url %>
 ```
 
-**Note:** the `for` and `per_page` properties must be indented for the `pagination` frontmatter.
+**Note:** the `for` and `per_page` properties must be indented for the `pagination` frontmatter (`per_page` is optional).
 
 You can define as many different types of pageable resources as you like, with whatever criteria you like:
 
@@ -90,13 +90,28 @@ activate :pagination do
 end
 ```
 
+### Custom path
+
+If your pagination index is called `all-recipes.html`, the subsequent pages will ba named `all-recipes/pages/2.html`, `all-recipes/pages/3.html`, and so on.
+
+You can customise the path with the `path` pagination frontmatter. For example, in `all-recipes.html`:
+
+```
+---
+pagination:
+  for: recipes
+  path: p/:num
+---
+```
+
+Your pages would be created at `all-recipes/p/1.html`, `all-recipes/p/2.html`, etc.
+
 ## Getting help
 
 Bug? Feature request? You can [open an issue](https://github.com/Aupajo/middleman-pagination/issues), [contact me on Twitter](http://twitter.com/aupajo), or [start a new topic on the Middleman forums](http://forum.middlemanapp.com). All feedback and suggestions welcome.
 
 ## TODO
 
-* Customisable path
 * Custom sorting (e.g. by date)
 * Convenience helper methods (e.g. make `pagination.` optional)
 * Pagination link generator (e.g. `Pages: 1 2 [3] ... 7 8 9`)

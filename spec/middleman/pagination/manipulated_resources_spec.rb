@@ -28,7 +28,7 @@ module Middleman::Pagination
         }
 
         let(:pagination_index) {
-          pagination_data = double(for: 'recipes', per_page: 2)
+          pagination_data = double(for: 'recipes', per_page: 2, path: nil)
           resource = double(:resource, path: 'index.html', is_recipe?: false, ignored?: false).as_null_object
           resource.stub_chain(:data, pagination: pagination_data)
           resource
