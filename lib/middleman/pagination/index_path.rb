@@ -16,7 +16,7 @@ module Middleman
       end
 
       def to_s
-        if page_num == 1
+        if first_index?
           original_path
         else
           replaced_path
@@ -24,6 +24,10 @@ module Middleman
       end
 
       private
+
+      def first_index?
+        page_num == 1
+      end
 
       def replaced_path
         if original_path.match(index_file_pattern)
