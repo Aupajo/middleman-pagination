@@ -14,6 +14,10 @@ module Middleman
 
       private
 
+      def pagination_data(resource, key)
+        resource.data.pagination.try(key)
+      end
+
       def new_resources
         context.configuration.map do |name, filter|
           new_resources_for_pageable(name, filter)
@@ -22,17 +26,17 @@ module Middleman
 
       def new_resources_for_pageable(name, filter)
         original_resources.map do |resource|
-          if !resource.ignored? && resource.data.pagination.try(:for) == name.to_s
+          if !resource.ignored? && pagination_data(resource, :for) == name.to_s
             new_resources_for_index(resource, filter)
           end
         end.compact
       end
-      
+
       def new_resources_for_index(first_index, filter)
-        symbolic_replacement_path = first_index.data.pagination.try(:path)
+        symbolic_replacement_path = pagination_data(first_index, :path)
 
         pageable_context = PageableContext.new(
-          per_page: first_index.data.pagination.per_page || 20,
+          per_page: pagination_data(first_index, :per_page) || 20,
           # OPTIMIZE
           resources: original_resources.reject(&:ignored?).select(&filter).sort_by(&:path),
           index_resources: [first_index]
@@ -60,7 +64,7 @@ module Middleman
 
       def add_pagination_to(resource, attributes = {})
         in_page_context = InPageContext.new(attributes)
-        resource.add_metadata(:locals => { 'pagination' => in_page_context })
+        resource.add_metadata(locals: { 'pagination' => in_page_context })
       end
     end
   end
