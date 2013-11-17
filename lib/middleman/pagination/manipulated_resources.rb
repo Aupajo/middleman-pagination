@@ -16,7 +16,10 @@ module Middleman
 
       def pagination_data(resource, key)
         keys = [:pagination, key]
-        keys.inject(resource.data) { |source, key| source.try(:[], key) } or keys.inject(resource.metadata[:options]) { |source, key| source.try(:[], key) }
+
+        [resource.data, resource.metadata[:options]].inject(nil) do |result, data_source|
+          result or keys.inject(data_source) { |source, key| source.try(:[], key) }
+        end
       end
 
       def new_resources
