@@ -8,11 +8,13 @@ module Middleman
       end
 
       def pageable(name, &block)
-        @pageable[name] = block
+        @pageable[name] = Pageable.new(name, &block)
       end
 
       def each(&block)
-        @pageable.each(&block)
+        @pageable.each do |name, pageable_obj|
+          yield pageable_obj
+        end
       end
     end
   end

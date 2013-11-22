@@ -11,15 +11,15 @@ describe Middleman::Pagination::Configuration do
   end
 
   describe "#each" do
-    it "yields the name and the block" do
+    it "yields each pageable object" do
       config = described_class.new
       block = lambda {}
       config.pageable(:recipes, &block)
 
       collected = []
       
-      config.each do |name, block|
-        collected << [name, block]
+      config.each do |pageable|
+        collected << [pageable.name, pageable.block]
       end
 
       expect(collected).to eql([[:recipes, block]])
@@ -35,7 +35,11 @@ describe Middleman::Pagination::Configuration do
       end
 
       result = nil
-      config.each { |name, block| result = block.call }
+      
+      config.each do |pageable|
+        result = pageable.block.call
+      end
+
       expect(result).to be(:ok)
     end
   end

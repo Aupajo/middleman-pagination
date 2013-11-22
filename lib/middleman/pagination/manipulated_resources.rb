@@ -15,8 +15,8 @@ module Middleman
       private
 
       def new_resources
-        context.configuration.map do |name, filter|
-          new_resources_for_pageable(name, set_from_filter(filter))
+        context.configuration.map do |pageable|
+          new_resources_for_pageable(pageable.name, set_from_filter(pageable.block))
         end.flatten
       end
 
