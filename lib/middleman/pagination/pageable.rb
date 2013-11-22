@@ -24,9 +24,28 @@ module Middleman
         end
       end
 
+      def new_page_for_index(context, index, pageable_context, page_num, symbolic_replacement_path)
+        sitemap = context.sitemap
+        path = IndexPath.new(context, index.path, page_num, symbolic_replacement_path).to_s
+        source_file = index.source_file
+
+        new_index = ::Middleman::Sitemap::Resource.new(sitemap, path, source_file)
+        add_pagination_to(new_index, pageable_context: pageable_context, page_num: page_num)
+        
+        pageable_context.index_resources << new_index
+
+        new_index
+      end
+
       private
 
-      # TODO remove duplicate method once refactoring has finished
+      def add_pagination_to(resource, attributes = {})
+        in_page_context = InPageContext.new(attributes)
+        resource.add_metadata(locals: { 'pagination' => in_page_context })
+      end
+
+      # TODO remove duplicate methods once refactoring has finished
+      
       def pagination_data(resource, key)
         keys = [:pagination, key]
 

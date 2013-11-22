@@ -22,13 +22,13 @@ module Middleman
 
       def new_resources_for_pageable(pageable)
         set = pageable.set(original_resources)
-        
+
         pageable.pagination_indexes(original_resources).map do |resource|
-          new_resources_for_index(resource, set)
+          new_resources_for_index(pageable, resource, set)
         end.compact
       end
 
-      def new_resources_for_index(first_index, set)
+      def new_resources_for_index(pageable, first_index, set)
         symbolic_replacement_path = pagination_data(first_index, :path)
 
         pageable_context = PageableContext.new(
@@ -40,7 +40,7 @@ module Middleman
         add_pagination_to(first_index, pageable_context: pageable_context, page_num: 1)
 
         (2..pageable_context.total_page_num).map do |n|
-          build_new_index(first_index, pageable_context, n, symbolic_replacement_path)
+          pageable.new_page_for_index(context, first_index, pageable_context, n, symbolic_replacement_path)
         end
       end
 
@@ -51,20 +51,7 @@ module Middleman
           result or keys.inject(data_source) { |source, key| source.try(:[], key) }
         end
       end
-
-      def build_new_index(first_index, pageable_context, page_num, symbolic_replacement_path)
-        sitemap = context.sitemap
-        path = IndexPath.new(context, first_index.path, page_num, symbolic_replacement_path).to_s
-        source_file = first_index.source_file
-
-        new_index = ::Middleman::Sitemap::Resource.new(sitemap, path, source_file)
-        add_pagination_to(new_index, pageable_context: pageable_context, page_num: page_num)
-        
-        pageable_context.index_resources << new_index
-
-        new_index
-      end
-
+      
       def add_pagination_to(resource, attributes = {})
         in_page_context = InPageContext.new(attributes)
         resource.add_metadata(locals: { 'pagination' => in_page_context })
