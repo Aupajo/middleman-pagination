@@ -16,31 +16,16 @@ module Middleman
 
       def new_resources
         context.configuration.map do |pageable|
-          new_resources_for_pageable(pageable.name, set_from_filter(pageable.block))
+          new_resources_for_pageable(pageable)
         end.flatten
       end
 
-      def set_from_filter(filter)
-        original_resources.select do |resource|
-          next if resource.ignored?
-          filter.call(resource)
-        end.sort_by(&:path)
-      end
-
-      def new_resources_for_pageable(name, set)
-        pagination_indexes(name).map do |resource|
+      def new_resources_for_pageable(pageable)
+        set = pageable.set(original_resources)
+        
+        pageable.pagination_indexes(original_resources).map do |resource|
           new_resources_for_index(resource, set)
         end.compact
-      end
-
-      def pagination_indexes(name, &block)
-        Enumerator.new do |enum| 
-          original_resources.each do |resource|
-            if !resource.ignored? && pagination_data(resource, :for) == name.to_s
-              enum.yield resource
-            end
-          end
-        end
       end
 
       def new_resources_for_index(first_index, set)
