@@ -10,6 +10,14 @@ module Middleman
         @block = block
       end
 
+      def new_resources(context, resources)
+        pagination_indexes(resources).map do |resource|
+          new_pages_for_index(context, resource, resources)
+        end.compact
+      end
+
+      private
+
       def set(resources)
         set_from_filter(resources)
       end
@@ -53,14 +61,10 @@ module Middleman
         new_index
       end
 
-      private
-
       def add_pagination_to(resource, attributes = {})
         in_page_context = InPageContext.new(attributes)
         resource.add_metadata(locals: { 'pagination' => in_page_context })
       end
-
-      # TODO remove duplicate methods once refactoring has finished
       
       def pagination_data(resource, key)
         keys = [:pagination, key]
