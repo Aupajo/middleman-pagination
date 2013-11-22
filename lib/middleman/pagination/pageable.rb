@@ -37,7 +37,7 @@ module Middleman
 
         pageable_context = PageableContext.new(
           per_page: pagination_data(index, :per_page) || 20,
-          resources: set(resources),
+          set: set(resources),
           index_resources: [index]
         )
 
