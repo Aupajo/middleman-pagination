@@ -19,7 +19,7 @@ describe Middleman::Pagination::Configuration do
       collected = []
       
       config.each do |pageable|
-        collected << [pageable.name, pageable.block]
+        collected << [pageable.name, pageable.resource_filter]
       end
 
       expect(collected).to eql([[:recipes, block]])
@@ -37,7 +37,7 @@ describe Middleman::Pagination::Configuration do
       result = nil
       
       config.each do |pageable|
-        result = pageable.block.call
+        result = pageable.resource_filter.call
       end
 
       expect(result).to be(:ok)

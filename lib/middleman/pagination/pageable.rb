@@ -2,12 +2,11 @@ module Middleman
   module Pagination
     class Pageable
 
-      attr_reader :name, :block
-      alias :filter :block
+      attr_reader :name, :resource_filter
 
       def initialize(name, &block)
         @name = name
-        @block = block
+        @resource_filter = block
       end
 
       def new_resources(context, resources)
@@ -19,7 +18,7 @@ module Middleman
       private
 
       def set(resources)
-        set_from_filter(resources)
+        set_from_resource_filter(resources)
       end
 
       def pagination_indexes(resources)
@@ -69,10 +68,10 @@ module Middleman
         end
       end
 
-      def set_from_filter(resources)
+      def set_from_resource_filter(resources)
         resources.select do |resource|
           next if resource.ignored?
-          filter.call(resource)
+          resource_filter.call(resource)
         end.sort_by(&:path)
       end
 
