@@ -24,6 +24,22 @@ module Middleman
         end
       end
 
+      def new_pages_for_index(context, index, resources)
+        symbolic_replacement_path = pagination_data(index, :path)
+
+        pageable_context = PageableContext.new(
+          per_page: pagination_data(index, :per_page) || 20,
+          resources: set(resources),
+          index_resources: [index]
+        )
+
+        add_pagination_to(index, pageable_context: pageable_context, page_num: 1)
+
+        (2..pageable_context.total_page_num).map do |n|
+          new_page_for_index(context, index, pageable_context, n, symbolic_replacement_path)
+        end
+      end
+
       def new_page_for_index(context, index, pageable_context, page_num, symbolic_replacement_path)
         sitemap = context.sitemap
         path = IndexPath.new(context, index.path, page_num, symbolic_replacement_path).to_s

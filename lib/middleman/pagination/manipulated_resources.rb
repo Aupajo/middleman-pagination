@@ -24,24 +24,8 @@ module Middleman
         set = pageable.set(original_resources)
 
         pageable.pagination_indexes(original_resources).map do |resource|
-          new_resources_for_index(pageable, resource, set)
+          pageable.new_pages_for_index(context, resource, original_resources)
         end.compact
-      end
-
-      def new_resources_for_index(pageable, first_index, set)
-        symbolic_replacement_path = pagination_data(first_index, :path)
-
-        pageable_context = PageableContext.new(
-          per_page: pagination_data(first_index, :per_page) || 20,
-          resources: set,
-          index_resources: [first_index]
-        )
-
-        add_pagination_to(first_index, pageable_context: pageable_context, page_num: 1)
-
-        (2..pageable_context.total_page_num).map do |n|
-          pageable.new_page_for_index(context, first_index, pageable_context, n, symbolic_replacement_path)
-        end
       end
 
       def pagination_data(resource, key)
