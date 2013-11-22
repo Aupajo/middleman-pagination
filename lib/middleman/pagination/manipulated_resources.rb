@@ -24,25 +24,34 @@ module Middleman
 
       def new_resources
         context.configuration.map do |name, filter|
-          new_resources_for_pageable(name, filter)
+          # OPTIMIZE
+          set = original_resources.reject(&:ignored?).select(&filter).sort_by(&:path)
+          new_resources_for_pageable(name, set)
         end.flatten
       end
 
-      def new_resources_for_pageable(name, filter)
-        original_resources.map do |resource|
-          if !resource.ignored? && pagination_data(resource, :for) == name.to_s
-            new_resources_for_index(resource, filter)
+      def each_pagination_index(name, &block)
+        Enumerator.new do |enum| 
+          original_resources.each do |resource|
+            if !resource.ignored? && pagination_data(resource, :for) == name.to_s
+              enum.yield resource
+            end
           end
+        end.each(&block)
+      end
+
+      def new_resources_for_pageable(name, set)
+        each_pagination_index(name).map do |resource|
+          new_resources_for_index(resource, set)
         end.compact
       end
 
-      def new_resources_for_index(first_index, filter)
+      def new_resources_for_index(first_index, set)
         symbolic_replacement_path = pagination_data(first_index, :path)
 
         pageable_context = PageableContext.new(
           per_page: pagination_data(first_index, :per_page) || 20,
-          # OPTIMIZE
-          resources: original_resources.reject(&:ignored?).select(&filter).sort_by(&:path),
+          resources: set,
           index_resources: [first_index]
         )
 
