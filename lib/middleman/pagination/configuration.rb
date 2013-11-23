@@ -8,11 +8,21 @@ module Middleman
       end
 
       def pageable(name, &block)
-        @pageable[name] = Pageable.new(name, resource_filter: block)
+        warn "`pageable` is deprecated, use `pageable_resource` instead"
+        pageable_resource(name, &block)
+      end
+
+      def pageable_resource(name, &block)
+        @pageable[name] = Pageable.new(name) do
+          resources.select do |resource|
+            next if resource.ignored?
+            block.call(resource)
+          end.sort_by(&:path)
+        end
       end
 
       def pageable_set(name, &block)
-        @pageable[name] = Pageable.new(name, set: block)
+        @pageable[name] = Pageable.new(name, &block)
       end
 
       def each(&block)
@@ -20,6 +30,7 @@ module Middleman
           yield pageable_obj
         end
       end
+
     end
   end
 end

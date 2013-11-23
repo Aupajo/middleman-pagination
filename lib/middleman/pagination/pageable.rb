@@ -2,28 +2,23 @@ module Middleman
   module Pagination
     class Pageable
 
-      attr_reader :name, :resource_filter
+      attr_reader :name
 
-      def initialize(name, options = {})
+      def initialize(name, &block)
         @name = name
-        @resource_filter = options[:resource_filter]
-        @set = options[:set]
+        @set = block
       end
 
-      def new_resources(context, resources)
+      def new_resources(extension_context, resources)
         pagination_indexes(resources).map do |resource|
-          new_pages_for_index(context, resource, resources)
+          new_pages_for_index(extension_context, resource, resources)
         end.compact
       end
 
       private
 
-      def set(resources)
-        if @set
-          @set.call
-        else
-          set_from_resource_filter(resources)
-        end
+      def set(extension_context, resources)
+        OpenStruct.new(resources: resources, data: extension_context.data).instance_eval(&@set)
       end
 
       def pagination_indexes(resources)
@@ -36,19 +31,19 @@ module Middleman
         end
       end
 
-      def new_pages_for_index(context, index, resources)
+      def new_pages_for_index(extension_context, index, resources)
         symbolic_replacement_path = pagination_data(index, :path)
 
         pageable_context = PageableContext.new(
           per_page: pagination_data(index, :per_page) || 20,
-          set: set(resources),
+          set: set(extension_context, resources),
           index_resources: [index]
         )
 
         add_pagination_to(index, pageable_context: pageable_context, page_num: 1)
 
         (2..pageable_context.total_page_num).map do |page_num|
-          new_index = IndexPage.new(context,
+          new_index = IndexPage.new(extension_context,
                                     index,
                                     pageable_context,
                                     page_num,
@@ -71,13 +66,6 @@ module Middleman
         [resource.data, resource.metadata[:options]].inject(nil) do |result, data_source|
           result or keys.inject(data_source) { |source, key| source.try(:[], key) }
         end
-      end
-
-      def set_from_resource_filter(resources)
-        resources.select do |resource|
-          next if resource.ignored?
-          resource_filter.call(resource)
-        end.sort_by(&:path)
       end
 
     end

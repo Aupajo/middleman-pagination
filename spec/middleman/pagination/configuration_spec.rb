@@ -5,7 +5,7 @@ describe Middleman::Pagination::Configuration do
     it "accepts a name and a block" do
       config = described_class.new
       expect {
-        config.pageable(:key) { }
+        config.pageable_resource(:key) { }
       }.not_to raise_error
     end
   end
@@ -14,33 +14,15 @@ describe Middleman::Pagination::Configuration do
     it "yields each pageable object" do
       config = described_class.new
       block = lambda {}
-      config.pageable(:recipes, &block)
+      config.pageable_resource(:recipes)
 
       collected = []
       
       config.each do |pageable|
-        collected << [pageable.name, pageable.resource_filter]
+        collected << pageable.name
       end
 
-      expect(collected).to eql([[:recipes, block]])
-    end
-  end
-
-  context "with instance_eval" do
-    it "acts appropriately" do
-      config = described_class.new
-
-      config.instance_eval do
-        pageable(:recipes) { :ok }
-      end
-
-      result = nil
-      
-      config.each do |pageable|
-        result = pageable.resource_filter.call
-      end
-
-      expect(result).to be(:ok)
+      expect(collected).to eql([:recipes])
     end
   end
 end

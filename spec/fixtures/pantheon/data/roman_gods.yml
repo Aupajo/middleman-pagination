@@ -1,0 +1,44 @@
+- name: Jupiter
+  title: King of the Gods
+- name: Juno
+  title: Queen of the Gods
+- name: Neptune
+  title: God of the Sea
+- name: Pluto
+  title: God of Death
+- name: Apollo
+  title: God of the Sun
+- name: Diana
+  title: Goddess of the Moon
+- name: Mars
+  title: God of War
+- name: Venus
+  title: Goddess of Love
+- name: Cupid
+  title: God of Love
+- name: Mercury
+  title: Messenger of the Gods
+- name: Minerva
+  title: Goddess of Wisdom
+- name: Ceres
+  title: The Earth Goddess
+- name: Proserpine
+  title: Goddess of the Underworld
+- name: Vulcan
+  title: The Smith God
+- name: Bacchus
+  title: God of Wine
+- name: Saturn
+  title: God of Time
+- name: Vesta
+  title: Goddess of the Home
+- name: Janus
+  title: God of Doors
+- name: Uranus and Gaia
+  title: Parents of Saturn
+- name: Maia
+  title: Goddess of Growth
+- name: Flora
+  title: Goddess of Flowers
+- name: Plutus
+  title: God of Wealth

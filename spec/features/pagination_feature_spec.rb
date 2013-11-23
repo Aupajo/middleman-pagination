@@ -10,7 +10,7 @@ describe "Simple pagination", :feature do
   it "produces pages for a set of resources" do
     run_site 'recipes' do
       activate :pagination do
-        pageable :recipes do |resource|
+        pageable_resource :recipes do |resource|
           resource.path.start_with?('recipes')
         end
       end
@@ -53,7 +53,7 @@ describe "Pagination with directory indexes", :feature do
   it "produces pages for a set of resources" do
     run_site 'recipes' do
       activate :pagination do
-        pageable :recipes do |resource|
+        pageable_resource :recipes do |resource|
           resource.path.start_with?('recipes')
         end
       end
@@ -85,7 +85,7 @@ describe "Pagination with indexes not named index", :feature do
   it "produces pages for a set of resources" do
     run_site 'recipes' do
       activate :pagination do
-        pageable :recipes do |resource|
+        pageable_resource :recipes do |resource|
           resource.path.start_with?('recipes')
         end
       end
@@ -111,7 +111,7 @@ describe "Pagination with proxied resources and ignored proxy resource template"
       end
 
       activate :pagination do
-        pageable :minerals do |resource|
+        pageable_resource :minerals do |resource|
           resource.path.start_with?('mineral')
         end
       end
@@ -143,7 +143,7 @@ describe "Pagination with proxied resources and ignored proxy index", :feature d
       proxy '/alternative/index.html', '/index.html', ignore: true
 
       activate :pagination do
-        pageable :minerals do |resource|
+        pageable_resource :minerals do |resource|
           resource.path.start_with?('mineral')
         end
       end
@@ -180,7 +180,7 @@ describe "Pagination with proxied resources and two indexes (one proxied)", :fea
       proxy '/alternative/index.html', '/index.html'
 
       activate :pagination do
-        pageable :minerals do |resource|
+        pageable_resource :minerals do |resource|
           resource.path.start_with?('mineral')
         end
       end

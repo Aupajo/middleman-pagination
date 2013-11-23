@@ -4,7 +4,7 @@ describe "Pagination with custom path", :feature do
   it "produces pages for a set of resources with a custom path" do
     run_site 'recipes' do
       activate :pagination do
-        pageable :recipes do |resource|
+        pageable_resource :recipes do |resource|
           resource.path.start_with?('recipes')
         end
       end

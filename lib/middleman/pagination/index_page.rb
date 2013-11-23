@@ -2,10 +2,10 @@ module Middleman
   module Pagination
     class IndexPage
 
-      attr_reader :context, :first_index, :pageable_context, :page_num, :symbolic_replacement_path
+      attr_reader :extension_context, :first_index, :pageable_context, :page_num, :symbolic_replacement_path
 
-      def initialize(context, first_index, pageable_context, page_num, symbolic_replacement_path)
-        @context = context
+      def initialize(extension_context, first_index, pageable_context, page_num, symbolic_replacement_path)
+        @extension_context = extension_context
         @first_index = first_index
         @pageable_context = pageable_context
         @page_num = page_num
@@ -25,11 +25,11 @@ module Middleman
       end
 
       def sitemap
-        context.sitemap
+        extension_context.sitemap
       end
 
       def path
-        IndexPath.new(context, first_index.path, page_num, symbolic_replacement_path).to_s
+        IndexPath.new(extension_context, first_index.path, page_num, symbolic_replacement_path).to_s
       end
 
       def metadata
