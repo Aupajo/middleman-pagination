@@ -39,7 +39,7 @@ Inside your `config.rb`:
 
 ```ruby
 activate :pagination do
-  pageable :recipes do |page|
+  pageable_resource :recipes do |page|
     # Match any page that lives in the "recipes" directory
     page.path.start_with?('recipes/')
   end
@@ -80,12 +80,12 @@ You can define as many different types of pageable resources as you like, with w
 
 ```ruby
 activate :pagination do
-  pageable :staff do |page|
+  pageable_resource :staff do |page|
     # Match any page whose URL includes "/staff/"
     page.url.include?('/staff/')
   end
 
-  pageable :news do |page|
+  pageable_resource :news do |page|
     # Match any page that has a "news" property in its frontmatter
     page.data.news.present?
   end
@@ -108,11 +108,55 @@ pagination:
 
 Your pages would be created at `all-recipes/p/1.html`, `all-recipes/p/2.html`, etc.
 
+## Paginate data
+
+You aren't limited to just pages. You can paginate over [Middleman Local Data](http://middlemanapp.com/advanced/local-data/), too.
+
+Let's say you had a file called `roman_gods.yml` in your `data` directory:
+
+```
+- name: Jupiter
+  title: King of the Gods
+- name: Juno
+  title: Queen of the Gods
+- name: Neptune
+  title: God of the Sea
+- name: Pluto
+  title: God of Death
+
+...snip...
+```
+
+You can produce pagination by using `pageable_set`:
+
+
+```ruby
+activate :pagination do
+  pageable_set :gods do
+    data.roman_gods
+  end
+end
+```
+
+In your template:
+
+```erb
+---
+pagination:
+  for: gods
+  per_page: 10
+---
+
+<% pagination.each do |god| %>
+  - <%= god.name %> (<%= god.title %>)
+<% end %>
+
+<%= link_to "Next page", pagination.next_page.url if pagination.next_page %>
+```
+
 ## Paginate anything
 
-*This is an upcoming feature. Change your Gemfile to `gem 'middleman-pagination', '~> 1.0.8.beta1'` to try it out.*
-
-You can paginate any collection of objects that responds to `each`, by using `pageable_set`:
+In fact, you can paginate any collection of objects that responds to `each`, by using `pageable_set`:
 
 ```ruby
 activate :pagination do
@@ -137,7 +181,7 @@ Planets (showing <%= pagination.per_page %> per page):
   - <%= planet %>
 <% end %>
 
-Next page: <%= pagination.next_page.url %>
+<%= link_to "Next page", pagination.next_page.url if pagination.next_page %>
 ```
 
 ## Getting help
@@ -146,13 +190,11 @@ Bug? Feature request? You can [open an issue](https://github.com/Aupajo/middlema
 
 ## TODO
 
-* Support for paginating Middleman data
-* Support for Middleman's Queryable interface
 * Custom sorting (e.g. by date)
 * Add tests for metadata support
 * Convenience helper methods (e.g. make `pagination.` optional)
 * Pagination link generator (e.g. `Pages: 1 2 [3] ... 7 8 9`)
-* Adopt Middleman's Queryable interface
+* Adopt Middleman's Queryable interface (potentially requires changes to Middleman first)
 
 ## Contributing
 

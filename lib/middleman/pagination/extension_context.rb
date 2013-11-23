@@ -3,7 +3,7 @@ module Middleman
     class ExtensionContext
       extend Forwardable
       
-      def_delegators :app, :sitemap, :index_file
+      def_delegators :app, :sitemap, :index_file, :data
 
       def initialize(extension)
         @extension = extension

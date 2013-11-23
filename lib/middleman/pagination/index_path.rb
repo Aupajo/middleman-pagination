@@ -1,10 +1,10 @@
 module Middleman
   module Pagination
     class IndexPath
-      attr_accessor :context, :original_path, :page_num, :symbolic_path_replacement
+      attr_accessor :extension_context, :original_path, :page_num, :symbolic_path_replacement
 
-      def initialize(context, original_path, page_num, symbolic_path_replacement = nil)
-        @context = context
+      def initialize(extension_context, original_path, page_num, symbolic_path_replacement = nil)
+        @extension_context = extension_context
         @original_path = original_path
         @symbolic_path_replacement = symbolic_path_replacement || 'pages/:num'
 
@@ -38,8 +38,8 @@ module Middleman
       end
 
       def index_file_pattern
-        index_file_ext = File.extname(context.index_file)
-        index_file_path = context.index_file.delete(index_file_ext)
+        index_file_ext = File.extname(extension_context.index_file)
+        index_file_path = extension_context.index_file.delete(index_file_ext)
 
         %r{
           (/)?                                # An optional slash

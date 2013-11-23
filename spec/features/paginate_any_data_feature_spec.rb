@@ -1,7 +1,7 @@
 require 'spec_helper'
 
-describe "Pagination with data", :feature do
-  it "produces pages for a set of resources with a custom path" do
+describe "Pagination with a set", :feature do
+  it "produces pages for an array" do
     run_site 'pantheon' do
       activate :pagination do
         pageable_set :gods do
@@ -27,5 +27,25 @@ describe "Pagination with data", :feature do
     find_on_page 'Hera'
     find_on_page 'Poseidon'
     find_on_page 'Hermes'
+  end
+end
+
+describe "Pagination with Middleman data", :feature do
+  it "produces pages from given data" do
+    run_site 'pantheon' do
+      activate :pagination do
+        pageable_set :gods do
+          data.roman_gods
+        end
+      end
+    end
+
+    visit '/'
+    find_on_page 'Jupiter'
+    find_on_page 'King of the Gods'
+
+    visit '/pages/6.html'
+    find_on_page 'Plutus'
+    find_on_page 'God of Wealth'
   end
 end
