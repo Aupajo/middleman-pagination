@@ -4,8 +4,10 @@
 [![Code Climate](https://codeclimate.com/github/Aupajo/middleman-pagination.png)](https://codeclimate.com/github/Aupajo/middleman-pagination)
 [![Dependency Status](https://gemnasium.com/Aupajo/middleman-pagination.png)](https://gemnasium.com/Aupajo/middleman-pagination)
 
-General-purpose pagination support for Middleman pages. Proxy pages for both pageable resources and pagination indexes are supported.
- 
+General-purpose pagination support for Middleman.
+
+Middleman resources, proxy pages, and any arbitrary collection of objects can be paginated.
+
 ## Installation
 
 Add this line to your Middleman site's Gemfile:
@@ -106,12 +108,44 @@ pagination:
 
 Your pages would be created at `all-recipes/p/1.html`, `all-recipes/p/2.html`, etc.
 
+## Paginate anything
+
+You can paginate any collection of objects that responds to `each`, by using `pageable_set`:
+
+```ruby
+activate :pagination do
+  pageable_set :planets do
+    ['Mercury', 'Venus', 'Earth', 'Mars', 'Jupiter', 'Saturn', 'Uranus', 'Neptune']
+  end
+end
+```
+
+The set can be used in exactly the same way:
+
+```
+---
+pagination:
+  for: planets
+  per_page: 4
+---
+
+Planets (showing <%= pagination.per_page %> per page):
+
+<% pagination.each do |planet| %>
+  - <%= planet %>
+<% end %>
+
+Next page: <%= pagination.next_page.url %>
+```
+
 ## Getting help
 
 Bug? Feature request? You can [open an issue](https://github.com/Aupajo/middleman-pagination/issues), [contact me on Twitter](http://twitter.com/aupajo), or [start a new topic on the Middleman forums](http://forum.middlemanapp.com). All feedback and suggestions welcome.
 
 ## TODO
 
+* Support for paginating Middleman data
+* Support for Middleman's Queryable interface
 * Custom sorting (e.g. by date)
 * Add tests for metadata support
 * Convenience helper methods (e.g. make `pagination.` optional)

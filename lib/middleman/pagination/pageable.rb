@@ -7,6 +7,7 @@ module Middleman
       def initialize(name, options = {})
         @name = name
         @resource_filter = options[:resource_filter]
+        @set = options[:set]
       end
 
       def new_resources(context, resources)
@@ -18,7 +19,11 @@ module Middleman
       private
 
       def set(resources)
-        set_from_resource_filter(resources)
+        if @set
+          @set.call
+        else
+          set_from_resource_filter(resources)
+        end
       end
 
       def pagination_indexes(resources)
