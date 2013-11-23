@@ -124,7 +124,7 @@ end
 
 The set can be used in exactly the same way:
 
-```
+```erb
 ---
 pagination:
   for: planets
