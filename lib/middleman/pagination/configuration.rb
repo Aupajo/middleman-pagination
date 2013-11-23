@@ -8,7 +8,7 @@ module Middleman
       end
 
       def pageable(name, &block)
-        @pageable[name] = Pageable.new(name, &block)
+        @pageable[name] = Pageable.new(name, resource_filter: block)
       end
 
       def each(&block)

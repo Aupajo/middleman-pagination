@@ -4,9 +4,9 @@ module Middleman
 
       attr_reader :name, :resource_filter
 
-      def initialize(name, &block)
+      def initialize(name, options = {})
         @name = name
-        @resource_filter = block
+        @resource_filter = options[:resource_filter]
       end
 
       def new_resources(context, resources)
