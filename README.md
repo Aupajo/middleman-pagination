@@ -110,7 +110,7 @@ Your pages would be created at `all-recipes/p/1.html`, `all-recipes/p/2.html`, e
 
 ## Paginate anything
 
-*This is an experimental feature available in `1.0.8.beta1`. Change your Gemfile to `gem 'middleman-pagination', '~> 1.0.8.beta1` to try it out.*
+*This is an upcoming feature. Change your Gemfile to `gem 'middleman-pagination', '~> 1.0.8.beta1'` to try it out.*
 
 You can paginate any collection of objects that responds to `each`, by using `pageable_set`:
 
