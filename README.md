@@ -107,7 +107,7 @@ pagination:
 ---
 ```
 
-Your pages would be created at `all-recipes/p/1.html`, `all-recipes/p/2.html`, etc.
+Your pages would be created at `all-recipes/p/2.html`, `all-recipes/p/3.html`, etc.
 
 ## Paginate data
 
