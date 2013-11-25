@@ -3,6 +3,7 @@
 [![Build Status](https://travis-ci.org/Aupajo/middleman-pagination.png?branch=master)](https://travis-ci.org/Aupajo/middleman-pagination)
 [![Code Climate](https://codeclimate.com/github/Aupajo/middleman-pagination.png)](https://codeclimate.com/github/Aupajo/middleman-pagination)
 [![Dependency Status](https://gemnasium.com/Aupajo/middleman-pagination.png)](https://gemnasium.com/Aupajo/middleman-pagination)
+[![Gem Version](https://badge.fury.io/rb/middleman-pagination.png)](http://badge.fury.io/rb/middleman-pagination)
 
 General-purpose pagination support for Middleman pages. Proxy pages for both pageable resources and pagination indexes are supported.
  
