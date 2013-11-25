@@ -9,7 +9,9 @@ module MiddlemanServerHelpers
   end
 
   def visit(path)
-    expect(get(path).status).to eql(200)
+    get(path)
+    expect(last_response.status).to eql(200),
+      "Expected 200 response, got #{last_response.status}: #{last_response.body}"
   end
 
   def find_on_page(string)

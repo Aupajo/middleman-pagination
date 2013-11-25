@@ -35,6 +35,11 @@ describe Middleman::Pagination::ExtensionContext do
     it_should_behave_like "a method delegated to the app"
   end
 
+  describe "#sitemap" do
+    let(:method_name) { :data }
+    it_should_behave_like "a method delegated to the app"
+  end
+
   describe "#index_file" do
     let(:method_name) { :index_file }
     it_should_behave_like "a method delegated to the app"

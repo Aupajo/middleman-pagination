@@ -4,7 +4,7 @@ module Middleman
       extend Forwardable
       include Enumerable
 
-      def_delegators :pageable_context, :resources,
+      def_delegators :pageable_context, :set,
                                         :index_resources,
                                         :total_page_num,
                                         :per_page,
@@ -19,13 +19,13 @@ module Middleman
         index_resources[page_num - 2] if page_num > 1
       end
 
-      def current_resources
+      def subset
         num_previous = per_page * (page_num - 1)
-        resources.drop(num_previous).take(per_page)
+        set.drop(num_previous).take(per_page)
       end
 
       def each(&block)
-        current_resources.each(&block)
+        subset.each(&block)
       end
     end
   end
