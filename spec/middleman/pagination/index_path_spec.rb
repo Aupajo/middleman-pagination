@@ -38,18 +38,18 @@ module Middleman::Pagination
         end
 
         it "takes index files into account" do
-          ext_context.stub(index_file: 'index.html')
+          allow(ext_context).to receive(:index_file) { 'index.html' }
           path = IndexPath.new(ext_context, 'original/index.html', 2)
           expect(path.to_s).to eql('original/pages/2.html')
         end
 
         it "preserves the index file extension" do
-          ext_context.stub(index_file: 'index.htm')
+          allow(ext_context).to receive(:index_file) { 'index.htm' }
           path = IndexPath.new(ext_context, 'original/index.htm', 2)
           expect(path.to_s).to eql('original/pages/2.htm')
         end
       end
-      
+
     end
 
   end

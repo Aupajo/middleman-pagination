@@ -31,7 +31,7 @@ module Middleman::Pagination
           pagination_data = { for: 'recipes', per_page: 2, path: nil }
           resource_data = { pagination: pagination_data }
           resource = double(:resource, path: 'index.html', is_recipe?: false, ignored?: false, metadata: {}).as_null_object
-          resource.stub(data: resource_data)
+          allow(resource).to receive(:data) { resource_data }
           resource
         }
 
@@ -43,9 +43,9 @@ module Middleman::Pagination
         }
 
         it "adds new index pages" do
-          expect(resource_list).to have(8).pages
+          expect(resource_list.size).to eq 8
           manipulated = described_class.new(context, resource_list)
-          expect(manipulated.resource_list).to have(11).pages
+          expect(manipulated.resource_list.size).to eq 11
         end
       end
     end
