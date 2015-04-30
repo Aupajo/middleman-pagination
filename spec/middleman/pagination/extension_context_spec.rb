@@ -8,8 +8,8 @@ describe Middleman::Pagination::ExtensionContext do
 
       context = described_class.new(extension)
       expect(context.app).to be(app_one)
-      
-      extension.stub(app: app_two)
+
+      allow(extension).to receive(:app) { app_two }
       expect(context.app).to be(app_two)
     end
   end
