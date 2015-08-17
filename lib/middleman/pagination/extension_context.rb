@@ -1,3 +1,5 @@
+require 'forwardable'
+
 module Middleman
   module Pagination
     class ExtensionContext
