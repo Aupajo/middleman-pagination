@@ -47,7 +47,8 @@ module Middleman
                                     index,
                                     pageable_context,
                                     page_num,
-                                    symbolic_replacement_path).resource
+                                    symbolic_replacement_path,
+                                    index.metadata[:locals]).resource
 
           pageable_context.index_resources << new_index
 
