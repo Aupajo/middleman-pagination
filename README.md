@@ -1,3 +1,9 @@
+# Unmaintained
+
+This gem is no longer maintained and I have no plans to update it.
+
+---
+
 # Middleman Pagination
 
 [![Build Status](https://travis-ci.org/Aupajo/middleman-pagination.png?branch=master)](https://travis-ci.org/Aupajo/middleman-pagination)
